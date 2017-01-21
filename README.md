@@ -16,11 +16,11 @@ Requirements
 Role Variables
 --------------
 
-One effectivley mandatory variable:
+One effectively mandatory variable:
 
     cephfs_server: "your.monitor.pool.example.com"
 
-Set that to a DNS address with the montiors you want client to connect to, such as mons.ceph.site.exaample.com or whatever you use.
+Set that to a DNS address with the montiors you want client to connect to, such as mons.ceph.site.example.com or whatever you use.
 
 See the default vars for other options you can use.
 
