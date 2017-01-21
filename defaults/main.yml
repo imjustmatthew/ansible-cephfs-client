@@ -1,2 +1,18 @@
 ---
 # defaults file for cephfs-client
+
+#this is typically overriden with an IP or DNS address that points to the monitors for the cluster
+cephfs_server: "localhost"
+cephfs_port: 6789
+#This is the directory in cephfs to mount
+cephfs_mountdir: "/"
+#This is the mountpoint for the directory to be mounted.
+cephfs_mountpoint: "/media/ceph"
+#these extra options will be appended after the cephx options:
+cephfs_opts: "noatime"
+#allow selection of kernel or FUSE: use one of "ceph" for kernel, "fuse.ceph" for FUSE.
+cephfs_type: "ceph"
+#path for the secretfile
+cephfs_secretpath: "/etc/ceph"
+#choose the state. "present" will just add the entry to fstab; "mounted" will both add the entry to fstab and ensure it is mounted
+cephfs_state: "mounted"

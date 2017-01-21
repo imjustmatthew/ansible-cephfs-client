@@ -1,38 +1,52 @@
-Role Name
+CephFS Client
 ========
 
-A brief description of the role goes here.
+Provides an ansible role for configuring cephfs on clients (such as desktops).
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+* You must have a working ceph cluster.
+* You must have kernel support for CephFS built into the target's kernel or the packages for FUSE installed.
+* You must have client cephx auth ids in the form: client.{{ hostname }}-cephfs
+* You must have client keys in the format client.{{ hostname }}-cephfs.keyring in the fetch/{{ cluster }}/etc/ceph/ directory. These will be placed on each client by this role in {{ cephfs_secretpath }} (default: /etc/ceph/) directory and chmod'ed to root-only.
+* Only tested on Ubuntu 14.04 and 16.04.1, but probably works on all Debian-like systems, and possibly on all Linux systems with support for Ceph.
+
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+One effectivley mandatory variable:
+
+    cephfs_server: "your.monitor.pool.example.com"
+
+Set that to a DNS address with the montiors you want client to connect to, such as mons.ceph.site.exaample.com or whatever you use.
+
+See the default vars for other options you can use.
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+No strict dependancies, but you will need your own ceph cluster and probably another role to collect the client keys in your fetch/ directory.
 
 Example Playbook
 -------------------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Examples of using this role:
 
-    - hosts: servers
+    - hosts: desktops
       roles:
-         - { role: username.rolename, x: 42 }
+         - { role: imjustmatthew.cephfs-client, cephfs_server: "mons.ceph.BOS.example.com", cephfs_mountpoint: "/media/ceph",  }
+
+Include some mount options:
+
+    - hosts: backup_servers
+      roles:
+         - { role: imjustmatthew.cephfs-client, cephfs_server: "mons.ceph.PBI.example.com", cephfs_opts: "noatime,ro",  }
+
 
 License
 -------
 
-BSD
+GPLv3
 
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
