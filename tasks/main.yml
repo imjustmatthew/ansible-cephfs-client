@@ -2,13 +2,13 @@
 # tasks file for cephfs-client
 
 - name: Ensure the client secret direcotry exists
-  - file:
+  file:
     path: {{ cephfs_secretpath }}
     state: directory
     mode: 0755
 
 - name: Copy keyring secret to client
-  - copy:
+  copy:
     src: fetch/{{ cluster }}/etc/ceph/client.{{ hostname }}-cephfs.keyring
     dest: {{ cephfs_secretpath }}/client.{{ hostname }}-cephfs.keyring
     owner: root
