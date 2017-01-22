@@ -3,14 +3,14 @@
 
 - name: Ensure the client secret direcotry exists
   file:
-    path: {{ cephfs_secretpath }}
+    path: "{{ cephfs_secretpath }}"
     state: directory
     mode: 0755
 
 - name: Copy keyring secret to client
   copy:
-    src: fetch/{{ cluster }}/etc/ceph/client.{{ hostname }}-cephfs.keyring
-    dest: {{ cephfs_secretpath }}/client.{{ hostname }}-cephfs.keyring
+    src: "fetch/{{ cluster }}/etc/ceph/client.{{ hostname }}-cephfs.keyring"
+    dest: "{{ cephfs_secretpath }}/client.{{ hostname }}-cephfs.keyring"
     owner: root
     group: root
     mode: 0400
